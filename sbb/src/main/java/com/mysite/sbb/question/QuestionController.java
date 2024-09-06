@@ -2,6 +2,8 @@ package com.mysite.sbb.question;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,20 +17,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class QuestionController {
-	
-	private final QuestionServiec questionServiec;
+
+	private final QuestionService questionServiec;
 	
 	/**
 	 * 질문 목록 전체 데이터 조회 
 	 * */
 	@GetMapping("/list")
-	public String list(Model model) {
-		
-		List<Question> qList = this.questionServiec.getList();
-		model.addAttribute("questionList",qList);
-		
-		return "question_list";
-	}
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+        Page<Question> paging = this.questionServiec.getList(page);
+        model.addAttribute("paging", paging);
+        return "question_list";
+    }
 	
 	/**
 	 * id값으로 질문상세 데이터 조회 
@@ -56,4 +56,5 @@ public class QuestionController {
 		this.questionServiec.create(subject, content);
 		return "redirect:/question/list";	// 질문 저장 후 질문 목록으로 이동 
 	}
+	
 }

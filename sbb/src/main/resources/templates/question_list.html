@@ -9,7 +9,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="question, loop : ${questionList}">
+            <tr th:each="question, loop : ${paging}">
                 <td th:text="${loop.count}"></td>
                 <td>
 					<!--문자열과 자바객체의 값을 더할땐 | | 이걸로 좌우를 감싸줘야함-->

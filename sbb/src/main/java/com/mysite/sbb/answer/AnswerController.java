@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mysite.sbb.question.Question;
-import com.mysite.sbb.question.QuestionServiec;
+import com.mysite.sbb.question.QuestionService;
 
 
 @RequestMapping("/answer")
@@ -18,7 +18,7 @@ import com.mysite.sbb.question.QuestionServiec;
 @Controller
 public class AnswerController {
 
-	private final QuestionServiec questionServiec;
+	private final QuestionService questionServiec;
 	private final AnswerService answerService;
 	
 	
