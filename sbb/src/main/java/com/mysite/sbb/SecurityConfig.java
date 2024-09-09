@@ -20,30 +20,30 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  * @Bean -> 스프링에 의해 생성 또는 관리되는 객체를 의미. 컨트롤러, 서비스, 리포지터리 등 모두 빈에 해당
  * 	- 하단 코드처럼 @Bean 애너테이션을 사용하여 빈을 정의하고 등록 할 수 있음 
  * */
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
+
 	// 인증되지 않은 모든 페이지의 요청을 허락한다는 의미. 
 	// 따라서 로그인하지 않더라도 모든 페이지에 접근할 수 있도록 한다.
-	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		http
-		.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-				.requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-		.csrf((csrf) -> csrf
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
+            .csrf((csrf) -> csrf
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")))
-		.headers((headers) -> headers
-				.addHeaderWriter(new XFrameOptionsHeaderWriter(
-						XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
-		;
-		
-		return http.build();
-	}
-	
-	// BCryptPasswordEncoder 직접 new 로 객체를 생성 하기보다 빈으로 등록하여 사용하는게 유지보수 측면에서 좋음
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+            .headers((headers) -> headers
+                .addHeaderWriter(new XFrameOptionsHeaderWriter(
+                    XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
+        ;
+        return http.build();
+    }
+
+    // BCryptPasswordEncoder 직접 new 로 객체를 생성 하기보다 빈으로 등록하여 사용하는게 유지보수 측면에서 좋음
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

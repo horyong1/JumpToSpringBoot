@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 	
 	private final UserRepository userRepository;
-	private PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 	
 	/**
 	 * User 리포저터리를 이용한 회원데이터 생성하는 함수
